@@ -1,8 +1,18 @@
 #include <deflateCompress.h>
 #include <stdio.h>
 
+void imprimirBuffer(const char *buffer);
+
 int main(int argc, char *argv[]){
 	
+	const char *BUFFER = "Este es un mensaje que espero que tenga mucha repeticion de letras en su interior";
+
+	imprimirBuffer(BUFFER);
+	deflateCompression(BUFFER);
+
+
+
+
 	u32 arry[]= {5,2,1,6};
 
 	for(int i = 0; i < 4; i++){
@@ -17,6 +27,11 @@ int main(int argc, char *argv[]){
 		printf("%d ", arry[i]);
 	}
 	printf("\n");
+
+
+
+	int a = 4;
+	printf("Variable a: %d || a << 1: %d\n", a, a<<1);
 	/*
 	if(argc > 1){
 		FILE *archivo;
@@ -38,3 +53,6 @@ int main(int argc, char *argv[]){
 	return 0;
 }
 
+void imprimirBuffer(const char *buffer){
+	printf("BUFFER: %s\n", buffer);
+}
