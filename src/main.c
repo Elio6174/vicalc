@@ -1,5 +1,6 @@
 #include <deflateCompress.h>
 #include <stdio.h>
+#include <conio.h>
 
 void imprimirBuffer(const char *buffer);
 
@@ -49,6 +50,11 @@ int main(int argc, char *argv[]){
 		fclose(archivo);
 
 	}*/
+
+
+	char tecla;
+	tecla = _getch();
+	printf("la tecla: %d\n", tecla);
 
 	return 0;
 }
