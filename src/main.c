@@ -2,7 +2,9 @@
 #include <curses.h>
 
 void imprimirBuffer(const char *buffer);
-void imprimirCeldas(char letras[], WINDOW *cel);
+
+void printRows(WINDOW *win);
+void printColumns(WINDOW *win);
 
 int main(int argc, char *argv[]){
 	initscr();
@@ -20,65 +22,11 @@ int main(int argc, char *argv[]){
 	
 	
 	int x, y;
-	
-	WINDOW *cel = derwin(win, 3, 13, 1, 1);
-	wborder(cel, '|', '|', '-', '-', '+', '+', '+', '+');
-	getmaxyx(cel, y, x);
-	mvwprintw(cel, y>>1, x>>1, "A");
-	wrefresh(cel);
 
-	WINDOW *cel2 = derwin(win, 3, 13, 1, 13);
-	wborder(cel2, '|', '|', '-', '-', '+', '+', '+', '+');
-	getmaxyx(cel2, y, x);
-	mvwprintw(cel2, y>>1, x>>1, "B");
-	wrefresh(cel2);
-	wrefresh(cel2); 
+	printRows(win);
+	printColumns(win);
 
-	WINDOW *cel3 = derwin(win, 3, 13, 1, 25);
-	wborder(cel3, '|', '|', '-', '-', '+', '+', '+', '+');
-	getmaxyx(cel3, y, x);
-	mvwprintw(cel3, y>>1, x>>1, "C");
-	wrefresh(cel3);
-	wrefresh(cel3); 
-	
-	WINDOW *cel4 = derwin(win, 3, 13, 1, 37);
-	wborder(cel4, '|', '|', '-', '-', '+', '+', '+', '+');
-	getmaxyx(cel4, y, x);
-	mvwprintw(cel4, y>>1, x>>1, "D");
-	wrefresh(cel4);
-	wrefresh(cel4); 
-	
-	WINDOW *cel5 = derwin(win, 3, 13, 1, 49);
-	wborder(cel5, '|', '|', '-', '-', '+', '+', '+', '+');
-	getmaxyx(cel5, y, x);
-	mvwprintw(cel5, y>>1, x>>1, "E");
-	wrefresh(cel5);
-	wrefresh(cel5); 
 
-	WINDOW *cel6 = derwin(win, 3, 13, 1, 61);
-	wborder(cel6, '|', '|', '-', '-', '+', '+', '+', '+');
-	getmaxyx(cel6, y, x);
-	mvwprintw(cel6, y>>1, x>>1, "F");
-	wrefresh(cel6);
-	wrefresh(cel6); 
-	
-	WINDOW *cel7 = derwin(win, 3, 13, 1, 73);
-	wborder(cel7, '|', '|', '-', '-', '+', '+', '+', '+');
-	getmaxyx(cel7, y, x);
-	mvwprintw(cel7, y>>1, x>>1, "G");
-	wrefresh(cel7);
-	wrefresh(cel7); 
-
-	WINDOW *cel8 = derwin(win, 3, 13, 1, 85);
-	wborder(cel8, '|', '|', '-', '-', '+', '+', '+', '+');
-	getmaxyx(cel8, y, x);
-	mvwprintw(cel8, y>>1, x>>1, "H");
-	wrefresh(cel8);
-	wrefresh(cel8); 
-	char rows[] = {'A','B','C','D'}; 
-	
-	//imprimirCeldas(rows, cel2);
-	
 
 
 	char ch;
@@ -91,31 +39,44 @@ int main(int argc, char *argv[]){
 			case 'o':
 				wattron(win, A_STANDOUT);
 				mvwprintw(win,0,7, "Options");
-			default:
+				default:
 			break;
 		}
 	}
-	
-	
-
+		
+		
+		
 	endwin();
 	return 0;
 }
+	
 
-void imprimirBuffer(const char *buffer){
-	printf("BUFFER: %s\n", buffer);
+	
+	
+void printColumns(WINDOW *win){
+	char rows[] = {'A','B','C','D','E','F','G'}; 
+	int lenght = sizeof(rows) / sizeof(rows[0]);
+	WINDOW *colm;		
+	int x, y;
+
+	for(int i = 0; i < lenght; i++){
+		colm = derwin(win, 3, 13, 1, 12*i + 5);
+		wborder(colm, '|', '|', '-', '-', '+', '+', '+', '+');
+		getmaxyx(colm, y, x);
+		mvwprintw(colm, y>>1, x>>1, "%c", rows[i]);
+		wrefresh(colm);
+	}
 }
 
 
-void imprimirCeldas(char letras[], WINDOW *cel2){
-	int lenght = sizeof(&letras) >> sizeof(letras[0]);
-	int max_x = 13, max_y = 3;
+void printRows(WINDOW *win){
 	int x, y;
-	for(int i = 0; i < lenght; i++){
-		
+	WINDOW *row;
+	for(int i = 0; i < 24; i++){
+		row = derwin(win, 3, 5, (i<<1)+3 , 1);
+		wborder(row, '|', '|', '-', '-', '+', '+', '+', '+');
+		getmaxyx(row, y, x);
+		mvwprintw(row, y>>1, x>>1, "%d", i+1);
+		wrefresh(row);
 	}
-
-	getmaxyx(cel2, y, x);
-	mvwprintw(cel2, y>>1, (x>>1), "O");
-	
 }
